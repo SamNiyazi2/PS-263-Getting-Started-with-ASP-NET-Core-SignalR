@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Semantics;
 using WiredBrain.Helpers;
 using WiredBrain.Models;
 
@@ -25,10 +27,14 @@ namespace WiredBrain.Controllers
         [HttpGet("{orderNo}")]
         public IActionResult GetUpdateForOrder(int orderNo)
         {
-            var result = _orderChecker.GetUpdate(orderNo);
-            if (result.New)
-                return new ObjectResult(result);
-            return NoContent();
+            CheckResult result;
+            do
+            {
+                result = _orderChecker.GetUpdate(orderNo);
+                Thread.Sleep(3000);
+            } while (!result.New);
+
+            return new ObjectResult(result);
         }
     }
 }
