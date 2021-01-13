@@ -1,0 +1,50 @@
+﻿
+.head11 {
+    text-align: center;
+    font-size: 24pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gainsboro;
+    margin: 20px 0 20px 0;
+}
+
+
+
+@media only screen and (max-width: 360px) {
+
+    .head11 {
+        font-size:12pt;
+        font-weight:bolder;
+        padding:0 0 20px 0 ;
+    }
+}
+
+
+.orderDiv { 
+
+    background-color:#b8b2b2;
+    margin:5px 5px 20px 5px;
+    padding:10px;
+    font-size:9pt;
+    line-height:12pt;
+    display:inline-block;
+    vertical-align:top;
+    height:120px;
+    width:240px;
+
+}
+
+p {
+    padding:0 5px 0 5px;
+    margin:0;
+}
+.blue{
+    background-color:aliceblue;
+    cursor:not-allowed;
+}
+
+.green {
+    background-color:aquamarine;
+    cursor:pointer;
+}

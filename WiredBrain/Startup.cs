@@ -28,6 +28,13 @@ namespace WiredBrain
                 app.UseDeveloperExceptionPage();
             }
 
+            // 01/12/2021 04:09 am - SSN - [20210112-0409] - [001] - M04 - Working with ASP.NET Core SignalR
+            var options = new DefaultFilesOptions();
+            options.DefaultFileNames.Clear();
+            options.DefaultFileNames.Add("WiredBrain.html");
+            app.UseDefaultFiles(options);
+
+
             app.UseFileServer();
 
             app.UseSignalR(routes => routes.MapHub<CoffeeHub>("/coffeehub"));
