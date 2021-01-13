@@ -16,6 +16,22 @@ setupConnection = () => {
         postMessage(checkResult);
     });
 
+    connection.on("SomeMessage_client_only", (someResult) => {
+
+        postMessage({ update: someResult });
+    });
+
+    connection.on("SomeMessage_allexcept_client", (someResult) => {
+
+        postMessage({ update: someResult });
+    });
+    
+
+    connection.on("GroupMessageGeneral", (someResult) => {
+
+        postMessage({ update: someResult });
+    });
+
 
     connection.on("NewOrder", function (order) {
 
@@ -80,6 +96,8 @@ setupConnection = () => {
             divTemp.appendChild(p);
 
             if (addClick) {
+
+                p.title = "Click to remove.";
 
                 p.addEventListener('click', (e) => {
                     statusDiv.removeChild(divTemp);

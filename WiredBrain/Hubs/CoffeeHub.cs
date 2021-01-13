@@ -18,7 +18,7 @@ namespace WiredBrain.Hubs
         }
 
         // 01/12/2021 06:27 am - SSN - [20210112-0607] - [008] - M04-02 - Implementing a hub 
-         public async Task GetUpdateForOrder(int orderId) 
+        public async Task GetUpdateForOrder(int orderId)
         {
             CheckResult result;
 
@@ -30,7 +30,7 @@ namespace WiredBrain.Hubs
 
                 // 01/12/2021 07:43 am - SSN - [20210112-0607] - [012] - M04-02 - Implementing a hub 
                 // Thread.Sleep(1000);
-                Thread.Sleep(1000);
+                Thread.Sleep(300);
 
                 if (result.New)
                 {
@@ -50,16 +50,46 @@ namespace WiredBrain.Hubs
 
         }
 
+
+        string SELECT_GROUP_NAME = "SomeGroupName";
+
         public override Task OnConnectedAsync()
         {
+
             Debug.WriteLine("ssn-20210113-0231: OnConnectedAsync");
+
+            //// 01/13/2021 03:35 am - SSN - [20210113-0333] - [001] - M04-05 - Context, Clients and Groups
+            var connectionId = Context.ConnectionId;
+            Task t = Task.Run(async () =>
+               {
+
+                   await Clients.Client(connectionId).SendAsync("SomeMessage_client_only", "(Code-101): Clients.Client(connectionId).SendAsync");
+                   await Clients.AllExcept(connectionId).SendAsync("SomeMessage_allexcept_client", "(Code-102): Clients.AllExcept(connectionId).SendAsync");
+
+                   //// A group is created when you add a client to a group.  It is removed when the last client is removed.
+                   await Groups.AddToGroupAsync(connectionId, SELECT_GROUP_NAME);
+
+                   await Clients.Group(SELECT_GROUP_NAME).SendAsync("GroupMessageGeneral", "Some message to the group");
+
+               });
+
+            t.Wait();
+
             return base.OnConnectedAsync();
+
+
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
+
             Debug.WriteLine("ssn-20210113-0232: OnDisconnectedAsync");
-            return base.OnDisconnectedAsync(exception);
+
+            // 01/13/2021 05:12 am - SSN - [20210113-0333] - [002] - M04-05 - Context, Clients and Groups
+            var connectionId = Context.ConnectionId;
+            await Groups.RemoveFromGroupAsync(connectionId, SELECT_GROUP_NAME);
+
+            // return base.OnDisconnectedAsync(exception);
         }
     }
 }

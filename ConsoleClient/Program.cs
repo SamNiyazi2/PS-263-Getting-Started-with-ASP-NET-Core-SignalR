@@ -44,6 +44,21 @@ namespace ConsoleClient
             connection.On<Order>("NewOrder", (order) =>
                 Console.WriteLine($"OrderNo {order.OrderNo}: Order for {order.Product}. Size: {order.Size}"));
 
+            connection.On<string>("SomeMessage_client_only", (someResult) => { Console.WriteLine(someResult); });
+
+            connection.On<string>("SomeMessage_allexcept_client", (someResult) => { Console.WriteLine(someResult); });
+
+            
+            connection.On<string>("GroupMessageGeneral", (someResult) => {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("GroupMessageGeneral:");
+                Console.WriteLine(someResult);
+                Console.ResetColor();
+            });
+
+
+
+
             connection.StartAsync().GetAwaiter().GetResult();
 
             Console.WriteLine("Listening. Press a key to quit");
