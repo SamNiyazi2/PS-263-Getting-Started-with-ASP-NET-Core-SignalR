@@ -38,7 +38,9 @@ namespace ConsoleClient
 
             var connection = new HubConnectionBuilder()
                 .WithUrl($"{targetApplicationName}/coffeehub")
-                .AddMessagePackProtocol()
+                // 01/14/2021 10:03 am - SSN - [20210114-0735] - [002] - M04-13 - Azure SignalR service
+                // Does not work with free Azure SignalR service
+                //    .AddMessagePackProtocol()
                 .Build();
 
             connection.On<Order>("NewOrder", (order) =>
@@ -48,8 +50,9 @@ namespace ConsoleClient
 
             connection.On<string>("SomeMessage_allexcept_client", (someResult) => { Console.WriteLine(someResult); });
 
-            
-            connection.On<string>("GroupMessageGeneral", (someResult) => {
+
+            connection.On<string>("GroupMessageGeneral", (someResult) =>
+            {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("GroupMessageGeneral:");
                 Console.WriteLine(someResult);

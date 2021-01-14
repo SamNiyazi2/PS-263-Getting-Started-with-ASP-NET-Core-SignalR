@@ -17,7 +17,19 @@ namespace WiredBrain
             services.AddSingleton(new Random());
             services.AddSingleton<OrderChecker>();
             services.AddHttpContextAccessor();
-            services.AddSignalR().AddMessagePackProtocol();
+
+            // 01/14/2021 07:35 am - SSN - [20210114-0735] - [001] - M04-13 - Azure SignalR service
+            // services.AddSignalR().AddMessagePackProtocol();
+            // We can pass the connection string on; otherwise, it will be picked up from Azure:SignalR:ConnectionString
+
+            // Failed: MessagePack not supported on Azure (Dev service version)
+            // services.AddSignalR().AddAzureSignalR().AddMessagePackProtocol();
+
+            services.AddSignalR().AddAzureSignalR();
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,10 +46,12 @@ namespace WiredBrain
             options.DefaultFileNames.Add("WiredBrain.html");
             app.UseDefaultFiles(options);
 
-
             app.UseFileServer();
 
-            app.UseSignalR(routes => routes.MapHub<CoffeeHub>("/coffeehub"));
+            // 01/14/2021 10:24 am - SSN - [20210114-0735] - [003] - M04-13 - Azure SignalR service
+            // app.UseSignalR(routes => routes.MapHub<CoffeeHub>("/coffeehub"));
+            app.UseAzureSignalR(routes => routes.MapHub<CoffeeHub>("/coffeehub"));
+
             app.UseMvc();
         }
     }

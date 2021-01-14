@@ -30,7 +30,7 @@ namespace WiredBrain.Hubs
 
                 // 01/12/2021 07:43 am - SSN - [20210112-0607] - [012] - M04-02 - Implementing a hub 
                 // Thread.Sleep(1000);
-                Thread.Sleep(300);
+                Thread.Sleep(30);
 
                 if (result.New)
                 {
