@@ -21,7 +21,7 @@ console.log(signalR.HttpTransportType.LongPolling);
 
 setupConnection = () => {
     connection = new signalR.HubConnectionBuilder()
-       // .withUrl("/coffeehub", signalR.HttpTransportType.ServerSentEvents)
+        .withUrl("/coffeehub", signalR.HttpTransportType.ServerSentEvents)
         .build();
 
     // 01/12/2021 06:21 am - SSN - [20210112-0607] - [005] - M04-02 - Implementing a hub 
