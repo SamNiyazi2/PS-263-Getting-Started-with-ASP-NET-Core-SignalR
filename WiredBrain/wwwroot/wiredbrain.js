@@ -1,12 +1,27 @@
-﻿// WebSocket = undefined;
+﻿
+// 01/13/2021 07:04 am - SSN - [20210113-0704] - [001] - M04-08 - Transport negotiation
+
+//WebSocket = undefined;
 //EventSource = undefined;
 //, signalR.HttpTransportType.LongPolling
 
+
 let connection = null;
+
+
+// 01/13/2021 07:16 am - SSN - [20210113-0704] - [002] - M04-08 - Transport negotiation
+//    .withUrl("/coffeehub")
+//    .withUrl("/coffeehub", signalR.HttpTransportType.LongPolling)
+
+console.log('20210114-0506');
+console.log(signalR.HttpTransportType.None);
+console.log(signalR.HttpTransportType.WebSockets);
+console.log(signalR.HttpTransportType.ServerSentEvents);
+console.log(signalR.HttpTransportType.LongPolling);
 
 setupConnection = () => {
     connection = new signalR.HubConnectionBuilder()
-        .withUrl("/coffeehub")
+        .withUrl("/coffeehub", signalR.HttpTransportType.ServerSentEvents)
         .build();
 
     // 01/12/2021 06:21 am - SSN - [20210112-0607] - [005] - M04-02 - Implementing a hub 
@@ -25,7 +40,7 @@ setupConnection = () => {
 
         postMessage({ update: someResult });
     });
-    
+
 
     connection.on("GroupMessageGeneral", (someResult) => {
 
@@ -64,19 +79,13 @@ setupConnection = () => {
         let className = "blue";
         let addClick = false;
 
-        console.log('20210113-0240');
-        console.log(order_or_checkResult);
+ 
         if (order_or_checkResult.finished) {
-            console.error("Finished:");
+ 
             className = "green";
             addClick = true
         }
-
-        console.log("20210112-0726");
-        console.log("-------------");
-        console.log(order_or_checkResult);
-        console.log(order);
-
+         
         displayIfApplicable(statusDiv, divTemp, order_or_checkResult.update, className, addClick);
         displayIfApplicable(statusDiv, divTemp, msg);
 
