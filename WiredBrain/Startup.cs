@@ -13,14 +13,23 @@ namespace WiredBrain
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(MvcOptions=>
+
+            // 08/10/2021 05:04 am - SSN
+            // System.InvalidOperationException: 'Endpoint Routing does not support 'IApplicationBuilder.UseMvc(...)'.
+            // To use 'IApplicationBuilder.UseMvc' set 'MvcOptions.EnableEndpointRouting = false' inside 'ConfigureServices(...).'
+
+                MvcOptions.EnableEndpointRouting = false
+                );
+
+
             services.AddSingleton(new Random());
             services.AddSingleton<OrderChecker>();
             services.AddHttpContextAccessor();
 
             // 01/14/2021 07:35 am - SSN - [20210114-0735] - [001] - M04-13 - Azure SignalR service
             // services.AddSignalR().AddMessagePackProtocol();
-            // We can pass the connection string on; otherwise, it will be picked up from Azure:SignalR:ConnectionString
+            // We can pass the connection string on; otherwise, it will be picked up from Azure:SignalR:ConnectionString -   <!--<UserSecretsId>PSSignalRProject</UserSecretsId>-->
 
             // Failed: MessagePack not supported on Azure (Dev service version)
             // services.AddSignalR().AddAzureSignalR().AddMessagePackProtocol();
