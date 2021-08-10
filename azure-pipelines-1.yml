@@ -1,0 +1,61 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- SignalR_M13
+
+pool:
+#  vmImage: 'windows-latest'
+  name: ssn-self-hosted-pool-20210604
+
+variables: 
+  RestoreBuildProjects: '**/WiredBrain/*.csproj'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  WebAppName: ps-263-SignalR-asp-net-core
+  connectedServiceName: 'Pay-As-You-Go (d6723a94-6723-4e85-b988-03bf28d6ea51)'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: '$(RestoreBuildProjects)'
+  enabled: true
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '$(RestoreBuildProjects)'
+    arguments: '--configuration $(BuildConfiguration)'
+  enabled: true
+
+
+- task: DotNetCoreCLI@2
+  displayName: Publish
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+    zipAfterPublish: True
+  enabled: True
+ 
+ 
+- task: AzureWebApp@1
+  displayName: 'Azure Web App Deploy: $(WebAppName) '
+  inputs:
+    azureSubscription: '$(connectedServiceName)'
+    appType: webApp
+    appName: '$(WebAppName)'
+    package: '$(build.artifactstagingdirectory)/**/*.zip'
+  enabled: True
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+  condition: succeededOrFailed()
+  enabled: True
+  
