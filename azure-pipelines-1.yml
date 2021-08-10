@@ -7,7 +7,8 @@ trigger:
 - SignalR_M13
 
 pool:
-  vmImage: 'windows-latest'
+#  vmImage: 'windows-latest'
+  name: ssn-self-hosted-pool-20210604
 
 variables: 
   RestoreBuildProjects: '**/WiredBrain/*.csproj'
