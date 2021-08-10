@@ -21,18 +21,18 @@
 }
 
 
-.orderDiv { 
-
-    background-color:#b8b2b2;
-    margin:5px 5px 20px 5px;
-    padding:10px;
-    font-size:9pt;
-    line-height:12pt;
-    display:inline-block;
-    vertical-align:top;
-    height:120px;
-    width:240px;
-
+.orderDiv {
+    background-color: #b8b2b2;
+    margin: 5px 5px 20px 5px;
+    padding: 10px;
+    font-size: 9pt;
+    line-height: 12pt;
+    display: inline-block;
+    vertical-align: top;
+    height: 120px;
+    max-height: 120px;
+    width: 260px;
+    overflow-y: auto;
 }
 
 p {
