@@ -18,8 +18,12 @@ namespace WiredBrain.Hubs
         }
 
         // 01/12/2021 06:27 am - SSN - [20210112-0607] - [008] - M04-02 - Implementing a hub 
-        public async Task GetUpdateForOrder(int orderId)
+        // Corrects the error "'Failed to invoke 'GetUpdateForOrder' due to an error on the server.'"
+        // public async Task GetUpdateForOrder(int orderId)
+        public async Task GetUpdateForOrder(string orderId_string)
         {
+            int.TryParse(orderId_string, out int orderId);
+
             CheckResult result;
 
             Models.Order order = OrderChecker.getOrder(orderId);

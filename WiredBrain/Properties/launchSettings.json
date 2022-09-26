@@ -1,9 +1,11 @@
 {
+  "['two']": "ggggggggg",
+  "['one']": "ggggggggg",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:60906/",
+      "applicationUrl": "http://localhost:60906",
       "sslPort": 0
     }
   },
@@ -12,22 +14,22 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
+        "VaultUri": "https://ssn-key-vaults-20210224.vault.azure.net/",
+        "AZURE_USERNAME": "sam2003@niyazi.com",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ssn-VaultUri": "https://ssn-key-vaults-20210224.vault.azure.net/",
-        "AZURE_USERNAME": "sam2003@niyazi.com"
+        "ssn-VaultUri": "https://ssn-key-vaults-20210224.vault.azure.net/"
       }
     },
     "WiredBrain": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
+        "VaultUri": "https://ssn-key-vaults-20210224.vault.azure.net/",
+        "AZURE_USERNAME": "sam2003@niyazi.com",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ssn-VaultUri": "https://ssn-key-vaults-20210224.vault.azure.net/",
-        "AZURE_USERNAME": "sam2003@niyazi.com"
+        "ssn-VaultUri": "https://ssn-key-vaults-20210224.vault.azure.net/"
       },
-      "applicationUrl": "http://p3158.nonbs.org:3158"
+      "applicationUrl": "http://p3158.nonbs.com:3158"
     }
-  },
-  "['one']": "ggggggggg",
-  "['two']": "ggggggggg"
+  }
 }

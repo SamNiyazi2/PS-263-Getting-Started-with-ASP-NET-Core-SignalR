@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>1c60b7e2-74bd-4fb5-b1c0-9bcc56f835ed</UserSecretsId>
-    <!--<UserSecretsId>PSSignalRProject</UserSecretsId>-->
+    <UserSecretsId>PSSignalRProject</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

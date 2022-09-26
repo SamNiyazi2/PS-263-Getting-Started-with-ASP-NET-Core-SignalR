@@ -29,12 +29,12 @@ setupConnection = () => {
     // connection.on("ReceiveOrderUpdate", (update) => {
     connection.on("ReceiveOrderUpdate", (checkResult) => {
 
-        postMessage(checkResult);
+        postMessage(checkResult, "on ReceiveOrderUpdate");
     });
 
     connection.on("SomeMessage_client_only", (someResult) => {
 
-        postMessage({ update: someResult });
+        postMessage({ update: someResult }, "on SomeMessage_client_only");
     });
 
     connection.on("SomeMessage_allexcept_client", (someResult) => {
@@ -45,7 +45,7 @@ setupConnection = () => {
 
     connection.on("GroupMessageGeneral", (someResult) => {
 
-        postMessage({ update: someResult });
+        postMessage({ update: someResult }, "on GroupMessageGeneral");
     });
 
 
@@ -56,6 +56,12 @@ setupConnection = () => {
 
 
     function postMessage(order_or_checkResult, msg) {
+
+        console.log('%c' + ' wiredbrain.js = 20220926-1442 - postMessage', 'font-size:10px; color:yellow');
+        console.dir(order_or_checkResult);
+        console.dir(order_or_checkResult.update);
+        console.dir(msg);
+
 
         let order = order_or_checkResult;
 
@@ -146,6 +152,23 @@ document.getElementById("submit").addEventListener("click", e => {
                 'content-type': 'application/json'
             }
         })
-        .then(response => response.text())
-        .then(id => connection.invoke("GetUpdateForOrder", id));
+        .then(response => {
+
+            console.log('%c' + 'wiredbrain.js - 20220926-1348', 'font-size:12px;color:yellow');
+            console.dir(response);
+
+            let results = response.text();
+            return results;
+        }
+
+        )
+        .then(id => {
+
+            console.log('%c' + 'wiredbrain.js - 20220926-1349', 'font-size:12px;color:yellow');
+            console.dir(id);
+
+            let results = connection.invoke("GetUpdateForOrder", id);
+            return results;
+
+        });
 });
