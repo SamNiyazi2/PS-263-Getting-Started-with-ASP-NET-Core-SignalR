@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>1c60b7e2-74bd-4fb5-b1c0-9bcc56f835ed</UserSecretsId>
+    <UserSecretsId>PSSignalRProject</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Redis" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.6.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" /> 
+  </ItemGroup>
+  
+</Project>

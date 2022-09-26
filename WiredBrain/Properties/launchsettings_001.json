@@ -18,11 +18,10 @@
     "WiredBrain": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "wiredbrain.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:60907/"
+      "applicationUrl": "http://p3158.nonbs.org:3158"
     }
   }
 }

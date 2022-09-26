@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>P3158 - Wired Brain Coffee Co</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link href="bootstrap.min.css" rel="stylesheet" />
+    <link href="site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <header class="row head11">
+            <div class="col-md-4  ">
+                <img height="180" src="wired-brain-coffee-logo.png" alt="logo" />
+            </div>
+            <div class="col-md-8   ">
+                M04 - Working with ASP.NET Core SignalR
+            </div>
+        </header>
+        <form>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label htmlFor="product">What's your poison?</label>
+                    <input type="text"
+                           id="product"
+                           class="form-control"
+                           value="Americano" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label htmlFor="size">Size</label>
+                    <input type="text"
+                           id="size"
+                           class="form-control"
+                           value="Vente" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button id="submit" type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="status"></div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+    <script src="signalr.js"></script>
+    <script src="wiredbrain.js"></script>
+</body>
+</html>
