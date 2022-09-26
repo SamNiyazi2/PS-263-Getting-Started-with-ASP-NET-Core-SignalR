@@ -2,7 +2,7 @@ name: Build and deploy .NET Core app to Windows WebApp ps-263-SignalR-asp-net-co
 on:
   push:
     branches:
-    - SignalR_M13
+    - main
 env:
   AZURE_WEBAPP_NAME: ps-263-SignalR-asp-net-core-v3
   AZURE_WEBAPP_PACKAGE_PATH: WiredBrain/publish
