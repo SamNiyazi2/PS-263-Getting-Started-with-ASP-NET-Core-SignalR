@@ -79,7 +79,8 @@ setupConnection = () => {
             divTemp = document.createElement("div");
             divTemp.className = "orderDiv";
             divTemp.id = divTempId;
-            statusDiv.appendChild(divTemp);
+            // 09/26/2022 08:37 pm - SSN - insertAdjacentElement instead of appendChild
+            statusDiv.insertAdjacentElement('afterbegin',divTemp);
             displayIfApplicable(statusDiv, divTemp, "Order No:" + order.orderNo);
         }
 
