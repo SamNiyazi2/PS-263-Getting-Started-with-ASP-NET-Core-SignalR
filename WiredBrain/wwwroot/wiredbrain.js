@@ -29,7 +29,7 @@ setupConnection = () => {
     // connection.on("ReceiveOrderUpdate", (update) => {
     connection.on("ReceiveOrderUpdate", (checkResult) => {
 
-        postMessage(checkResult, "on ReceiveOrderUpdate");
+        postMessage(checkResult, "on ReceiveOrderUpdate message");
     });
 
     connection.on("SomeMessage_client_only", (someResult) => {
@@ -46,22 +46,21 @@ setupConnection = () => {
     connection.on("GroupMessageGeneral", (someResult) => {
 
         postMessage({ update: someResult }, "on GroupMessageGeneral");
+
     });
 
 
     connection.on("NewOrder", function (order) {
 
-        postMessage(order, "Someone ordered an " + order.product);
+        postMessage(order, "Order for: " + order.product);
     });
 
 
     function postMessage(order_or_checkResult, msg) {
 
-        console.log('%c' + ' wiredbrain.js = 20220926-1442 - postMessage', 'font-size:10px; color:yellow');
-        console.dir(order_or_checkResult);
-        console.dir(order_or_checkResult.update);
-        console.dir(msg);
-
+        if (order_or_checkResult == undefined) {
+            return;
+        }
 
         let order = order_or_checkResult;
 
@@ -80,8 +79,11 @@ setupConnection = () => {
             divTemp.className = "orderDiv";
             divTemp.id = divTempId;
             // 09/26/2022 08:37 pm - SSN - insertAdjacentElement instead of appendChild
-            statusDiv.insertAdjacentElement('afterbegin',divTemp);
-            displayIfApplicable(statusDiv, divTemp, "Order No:" + order.orderNo);
+            statusDiv.insertAdjacentElement('afterbegin', divTemp);
+
+            if (order && order.orderNo) {
+                displayIfApplicable(statusDiv, divTemp, "Order No:" + order.orderNo);
+            }
         }
 
         let className = "blue";
@@ -140,23 +142,50 @@ setupConnection = () => {
 setupConnection();
 
 
+// 11/13/2022 03:35 pm - SSN - Revise - Validate input
+
 document.getElementById("submit").addEventListener("click", e => {
     e.preventDefault();
-    const product = document.getElementById("product").value;
-    const size = document.getElementById("size").value;
+
+
+    idProductError.innerText = "";
+    idProductError.className = "";
+
+    idSizeError.innerText = "";
+    idSizeError.className = "";
+
+    let errorCount = 0;
+
+    if (size.selectedIndex <= 0) {
+        idSizeError.innerText = "Input is required.";
+        idSizeError.className = "cssError alert-danger";
+        size.focus();
+        errorCount++;
+    }
+
+    if (product.selectedIndex <= 0) {
+        idProductError.innerText = "Input is required.";
+        idProductError.className = "cssError alert-danger";
+        product.focus();
+        errorCount++;
+    }
+
+    if (errorCount > 0) return;
+
+    let sizeValue = size.options[size.selectedIndex].text
+    let productText = product.options[product.selectedIndex].text
+
+
 
     fetch("/Coffee",
         {
             method: "POST",
-            body: JSON.stringify({ product, size }),
+            body: JSON.stringify({ product: productText, size: sizeValue }),
             headers: {
                 'content-type': 'application/json'
             }
         })
         .then(response => {
-
-            console.log('%c' + 'wiredbrain.js - 20220926-1348', 'font-size:12px;color:yellow');
-            console.dir(response);
 
             let results = response.text();
             return results;
@@ -165,11 +194,63 @@ document.getElementById("submit").addEventListener("click", e => {
         )
         .then(id => {
 
-            console.log('%c' + 'wiredbrain.js - 20220926-1349', 'font-size:12px;color:yellow');
-            console.dir(id);
 
             let results = connection.invoke("GetUpdateForOrder", id);
             return results;
 
         });
 });
+
+
+// 11/13/2022 03:56 am - SSN - Change free text input to select box.
+
+const coffeeDrinkOptions = [
+    'Raspberry Green Tea',
+    'Cookie monster frappe',
+    'Peanut butter cup frappe',
+    'Nutty Brunette frappe',
+    'Iced black tea',
+    'Iced latte nude flavor',
+    'Iced latte white ninja flavor',
+    'Iced latte tuxedo flavor'
+];
+
+
+const sizeOptions = [
+    'Small',
+    'Medium',
+    'Large'
+];
+
+
+function addSelectOption(listObj, selectIndex, innerText) {
+
+    let option1 = new Option();
+    option1.value = selectIndex;
+    option1.innerText = innerText;
+    listObj.options[selectIndex] = option1;
+
+}
+
+
+function fillList(listObj, dataArray) {
+
+    addSelectOption(listObj, 0, 'Make a selection');
+
+    for (let ndx = 0; ndx < dataArray.length; ndx++) {
+
+        addSelectOption(listObj, ndx + 1, dataArray[ndx]);
+
+    }
+
+}
+
+
+
+(function () {
+
+    fillList(product, coffeeDrinkOptions);
+    fillList(size, sizeOptions);
+
+})();
+

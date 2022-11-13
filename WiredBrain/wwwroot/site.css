@@ -48,3 +48,20 @@ p {
     background-color:aquamarine;
     cursor:pointer;
 }
+
+.cssError{
+    margin:3px;
+    padding: 3px 6px;
+}
+
+.cssHint {
+
+        background-color:lightyellow;
+        padding:20px;
+        margin:20px;
+}
+
+select{
+    width:40px;
+    
+}
